@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BSE Forecasting – MARUTI</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>BSE Forecasting – MARUTI</h1>
+    <nav><a href="/">Home</a> <a href="/bse">BSE</a> <a href="/nifty">NIFTY</a></nav>
+  </header>
+
+  <main class="grid">
+    {% if error %}
+      <section class="card"><h2>Error</h2><p class="muted">{{ error }}</p></section>
+    {% else %}
+      <section class="card">
+        <h2>Latest & Predictions (next {{ days }} day(s))</h2>
+        <ul>
+          <li><strong>Last Close:</strong> ₹ {{ last_close }}</li>
+          <li><strong>LR (.pkl) Day-1:</strong> ₹ {{ lr_next }}</li>
+          <li><strong>LSTM (.h5) Day-1:</strong> ₹ {{ lstm_day1 }}</li>
+          <li><strong>Quantum kNN Day-1:</strong> ₹ {{ q_next }}</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Price History</h2>
+        <img alt="Price chart" src="data:image/png;base64,{{ price_img }}">
+      </section>
+
+      <section class="card">
+        <h2>LR vs LSTM vs Quantum</h2>
+        <img alt="Bar comparison" src="data:image/png;base64,{{ comp_bar }}">
+      </section>
+
+      <section class="card">
+        <h2>Forward Overlay</h2>
+        <img alt="Forward overlay" src="data:image/png;base64,{{ forward_overlay }}">
+        <p class="muted">Overlay shows the last 120 sessions and future points (LR day-1, LSTM across horizon, Quantum day-1).</p>
+      </section>
+    {% endif %}
+  </main>
+</body>
+</html>
